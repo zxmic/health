@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="po.entity.StudentloginEntity" table="studentlogin" schema="jspssh">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="native"/>
+        </id>
+        <property name="username" type="string">
+            <column name="username" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="password" type="string">
+            <column name="password" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="realname" type="string">
+            <column name="realname" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="clazz" type="string">
+            <column name="class" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="studentid" type="string">
+            <column name="studentid" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="tel" type="string">
+            <column name="tel" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="classmaster" type="string">
+            <column name="classmaster" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="mastertel" type="string">
+            <column name="mastertel" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="college" type="string">
+            <column name="college" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="major" type="string">
+            <column name="major" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="dorm" type="string">
+            <column name="dorm" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

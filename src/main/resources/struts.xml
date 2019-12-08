@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!--修改struts action访问时的后缀，默认为.action;可以省略;多个可以使用英文逗号隔开-->
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.objectFactory.spring.autoWire" value="name"/>
+    <constant name="struts.action.extension" value="action,do,html"/>
+    <package name="demo" extends="struts-default" >
+        <action name="add" class="UserAction" method="add">
+            <result name="add">su.jsp</result>
+        </action>
+
+        <action name="slogin" class="loginAction" method="studentLogin">
+            <result name="sok">/com/local/student/main_student.jsp</result>
+            <result name="sno">/com/local/student/su.jsp</result>
+            <result name="tok">/com/local/teacher/main_teacher.jsp</result>
+            <result name="tno">/com/local/teacher/login.jsp</result>
+
+
+        </action>
+    </package>
+    <package name="teacher" extends="struts-default">
+
+
+    </package>
+</struts>
