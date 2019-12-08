@@ -11,7 +11,7 @@ import service.StudentService;
 
 import javax.servlet.ServletContext;
 
-public class loginAction extends BaseAction implements ModelDriven<StudentloginEntity> {
+public class LoginAction extends BaseAction implements ModelDriven<StudentloginEntity> {
 //    private String username;
 //    private String password;
 ////    private studentServiceImpl stuServiceImpl=(studentServiceImpl)stuService.;
