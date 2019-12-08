@@ -12,78 +12,30 @@ import service.StudentService;
 import javax.servlet.ServletContext;
 
 public class LoginAction extends BaseAction implements ModelDriven<StudentloginEntity> {
-//    private String username;
-//    private String password;
-////    private studentServiceImpl stuServiceImpl=(studentServiceImpl)stuService.;
-////    Session session = sessionFactory.openSession();
-//
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+
+    private StudentloginEntity stuE=new StudentloginEntity();
+
 
     public String studentLogin() throws Exception{
-        //从Application域获得spring容器
-        //1、获得servletContext对象
-        ServletContext sc= ServletActionContext.getServletContext();
-        //2、从sc中获得ac容器
-        WebApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(sc);
-        //3、从容器中获得studentService
-        StudentService ss= (StudentService) ac.getBean("studentService");
-
-        //=========================================================================================
-        //接收参数
-        String inputUserName=ServletActionContext.getRequest().getParameter("username");
-        String inputPassword=ServletActionContext.getRequest().getParameter("password");
         //1、调用Service执行登录逻辑
-        StudentloginEntity studentloginEntity=studentService.findStuInfoByStuUsername(inputUserName);
-        System.out.println("查询报空1");
+        StudentloginEntity studentloginEntity=studentService.checkStu(stuE.getUsername(),stuE.getPassword());
         //2、将返回的StudentloginEntity对象放入session域
         ActionContext.getContext().getSession().put("studentloginEntity",studentloginEntity);
-        System.out.println("查询报空2");
         //3、重定向到项目首页  表明在数据库中查询到学生信息
         if(studentloginEntity!=null){
             System.out.println("查询报空3正确");
-            return "sok";
+            return "success";
+
 
         }else {
             System.out.println("查询报空3错误");
             //数据库查询为空的结果
-            return "sno";
+            return "error";
         }
 
 
-
-
-        //从数据库查询登录信息
-//        StudentloginEntity studentloginEntity=studentService.findStuInfoByStuUsername(username);
-
-//        if (!studentloginEntities.isEmpty()){
-//            for(StudentloginEntity studentloginEntity : studentloginEntities){
-//                if(studentloginEntity.getPassword()==password){
-//                    System.out.println("sok");
-//                    return "sok";
-//                }
-//            }
-//        }
-//        if(studentloginEntities.isEmpty()){
-//            System.out.println("empty  no");
-//            return "sno";
-//        }
-
     }
-    public String teacherLogin(){
+    public String teacherLogin() throws Exception{
 //        if("xxx".equals(username)&&"xxx".equals(password)){
 //            System.out.println("xxxok");
 //            return "tok";
@@ -93,8 +45,19 @@ public class LoginAction extends BaseAction implements ModelDriven<StudentloginE
     }
 
 
+    public String studentRegist() throws Exception{
+        StudentloginEntity studentloginEntity=studentService.saveStuInfoTwo(stuE);
+        if (studentloginEntity==null){
+            return "error";
+        }else {
+            return "success";
+        }
+
+    }
+
+
     @Override
     public StudentloginEntity getModel() {
-        return null;
+        return stuE;
     }
 }

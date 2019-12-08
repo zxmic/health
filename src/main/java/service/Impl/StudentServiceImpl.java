@@ -15,12 +15,32 @@ public class StudentServiceImpl implements StudentService {
 
     private StudentInfoDao studentInfoDao;
 
-    public void setStudentInfoDao(StudentInfoDaoImpl studentDao) {
-        this.studentInfoDao=studentDao;
+    public void setStudentInfoDao(StudentInfoDao studentInfoDao) {
+        this.studentInfoDao = studentInfoDao;
     }
 
+//    public void setStudentInfoDao(StudentInfoDaoImpl studentDao) {
+//        this.studentInfoDao=studentDao;
+//    }
+
+
+    /**
+     * 逻辑需要重写
+     * @param studentId
+     * @return
+     */
     @Override
     public StudentloginEntity findStuInfoByStuId(String studentId) {
+
+
+        //根据登录名查询用户
+        StudentloginEntity stu=studentInfoDao.findStuInfoByStuId(studentId);
+        //如果用户不存在，抛出异常,提示用户名不存在
+        if(stu==null){
+            throw new RuntimeException("用户名不存在");
+        }
+        //判断密码是否正确==》不正确=》抛出异常，提示密码错误
+
         return studentInfoDao.findStuInfoByStuId(studentId);
     }
 
@@ -38,9 +58,12 @@ public class StudentServiceImpl implements StudentService {
             throw new RuntimeException("用户名不存在");
         }
         //3、判断密码是否正确，不正确---》抛出异常，提示密码错误
+        if(!studentloginEntity.getPassword().equals(stuPassword)){
+            throw new RuntimeException("密码错误");
+        }
         //4、返回查询到的用户对象
 
-        return studentInfoDao.checkStu(stuUsername,stuPassword);
+        return studentloginEntity;
     }
 
     @Override
@@ -59,8 +82,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentloginEntity saveStuInfoTwo(StudentloginEntity studentloginEntity) {
+        StudentloginEntity stu = null;
+        StudentloginEntity stuEntity = studentInfoDao.findStuInfoByStuUsername(studentloginEntity.getUsername());
+        //1、判断用户是否存在，存在---》抛出异常，提示用户名不存在
+        if(stuEntity!=null){
+            throw new RuntimeException("用户名已存在，请更换用户名");
+        }
+
+        //2、不存在---》保存用户
+        if(stuEntity==null){
+            stu = studentInfoDao.saveStuInfoTwo(studentloginEntity);
+            throw new RuntimeException("您已注册成功，请返回登录");
+        }
+        return stu;
+
+    }
+
+    @Override
     public StudentloginEntity saveStuInfo(StudentloginEntity studentloginEntity) {
-        return studentInfoDao.saveStuInfo(studentloginEntity);
+        return null;
     }
 
     @Override

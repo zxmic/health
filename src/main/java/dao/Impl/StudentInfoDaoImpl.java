@@ -1,5 +1,6 @@
 package dao.Impl;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import dao.StudentInfoDao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -14,26 +15,32 @@ import po.entity.StudentloginEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+//HibernateDaoSupport 为dao注入sessionFactory
 public class StudentInfoDaoImpl extends HibernateDaoSupport implements StudentInfoDao {
 
-    //private static final Logger logger= LogManager.getLogger(StudentInfoDaoImpl.class);
-//    private HibernateTemplate hibernateTemplate;
-//    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-//        this.hibernateTemplate = hibernateTemplate;
-//    }
-
     @Override
-    public StudentloginEntity findStuInfoByStuId(String studentId) {
-        String hql;
-        hql = "from StudentloginEntity s where s.studentid=?";
-        List list=this.getHibernateTemplate().find(hql,studentId);
-        if(list.size()>0){
-            System.out.println("根据用户名查询到用户");
-            return (StudentloginEntity)list.get(0);
-        }
-        System.out.println("根据用户名没有查询到用户");
-        return null;
+    public StudentloginEntity findStuInfoByStuId(final String studentId) {
+        return getHibernateTemplate().execute(new HibernateCallback<StudentloginEntity>() {
+            @Override
+            public StudentloginEntity doInHibernate(Session session) throws HibernateException {
+                String hql = "from StudentloginEntity s where s.studentid=?";
+                Query query=session.createQuery(hql);
+                query.setParameter(0,studentId);
+                StudentloginEntity stuEntity=(StudentloginEntity)query.uniqueResult();
+                return stuEntity;
+            }
+        });
+
+
+//        String hql;
+//        hql = "from StudentloginEntity s where s.studentid=?";
+//        List list=this.getHibernateTemplate().find(hql,studentId);
+//        if(list.size()>0){
+//            System.out.println("根据用户名查询到用户");
+//            return (StudentloginEntity)list.get(0);
+//        }
+//        System.out.println("根据用户名没有查询到用户");
+//        return null;
     }
 
     //通过用户名查找学生
@@ -116,8 +123,17 @@ public class StudentInfoDaoImpl extends HibernateDaoSupport implements StudentIn
     }
 
     @Override
-    public StudentloginEntity saveStuInfo(StudentloginEntity studentloginEntity) {
+    public StudentloginEntity saveStuInfoTwo(StudentloginEntity studentloginEntity) {
         try {
+            studentloginEntity.setRealname("0");
+            studentloginEntity.setClazz("0");
+            studentloginEntity.setStudentid("0");
+            studentloginEntity.setTel("0");
+            studentloginEntity.setClassmaster("0");
+            studentloginEntity.setMastertel("0");
+            studentloginEntity.setCollege("0");
+            studentloginEntity.setMajor("0");
+            studentloginEntity.setDorm("0");
             this.getHibernateTemplate().save(studentloginEntity);
             System.out.println("保存用户数据到数据库成功");
             return studentloginEntity;
@@ -128,10 +144,19 @@ public class StudentInfoDaoImpl extends HibernateDaoSupport implements StudentIn
         return null;
     }
 
+
+
+    @Override
+    public StudentloginEntity saveStuInfo(StudentloginEntity studentloginEntity) {
+
+        return null;
+    }
+
     @Override
     public boolean deleteStu(String studentId) {
         StudentloginEntity studentloginEntity=(StudentloginEntity)this.getHibernateTemplate().load(StudentloginEntity.class,new Integer(studentId));
         this.getHibernateTemplate().delete(studentloginEntity);
         return true;
     }
+
 }

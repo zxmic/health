@@ -24,6 +24,9 @@ public interface StudentInfoDao {
     public boolean updateStuInfo(StudentloginEntity studentloginEntity);
 
     //注册信息
+    public StudentloginEntity saveStuInfoTwo(StudentloginEntity studentloginEntity);
+
+    //补充注册信息
     public StudentloginEntity saveStuInfo(StudentloginEntity studentloginEntity);
 
     //删除用户

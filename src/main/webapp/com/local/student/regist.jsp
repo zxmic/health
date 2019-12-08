@@ -29,17 +29,29 @@
 
     </style>
     <script>
-        function jump(){
-            window.location.href="";
+    function jump(){
+            window.location.href="/com/local/student/login.jsp";
         }
     </script>
 </head>
-<body style="width: 100%; height: 100%;">
-    <div>
+<body>
+    <div class="main_container">
         <div>
-            账号
+            <h3>欢迎注册</h3>
         </div>
-        <div></div>
+        <div>
+            <form name="form1" action="/regist_studentRegist.action" method="post" >
+                学&nbsp&nbsp号:<input name="username" type="text" value="2240170201" placeholder="2240170201" style="width: 200px;height:25px;border-radius: 10px;color: black;"  maxlength="20" minlength="1"/><br>
+                密&nbsp&nbsp码:<input name="password" type="password" value="2240170201" placeholder="2240170201" style="width: 200px;height:25px;border-radius: 10px;color: black"  maxlength="20" minlength="1"/> <br>
+
+                <div>
+                    <font color="red"><s:property value="exception.message"/></font>
+                </div>
+
+                <input type="submit" value="确认注册" >
+                <input type="button" value="返回登录" onclick=javascript:jump()>
+            </form>
+        </div>
     </div>
 
 </body>

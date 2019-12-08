@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: zx
@@ -30,7 +31,7 @@
     </style>
     <script>
         function jump(){
-            window.location.href="regist.jsp";
+            window.location.href="/com/local/student/regist.jsp";
         }
     </script>
 
@@ -40,12 +41,14 @@
     <div >
         <h3>欢迎登录</h3>
     </div>
-
-    </div>
     <div>
-        <form action="/slogin.action" method="post">
-            用户名:<input name="username" type="text" placeholder="请输入用户名" style="width: 200px;height:25px;border-radius: 10px;color: black;"  maxlength="20" minlength="1"/><br>
-            密&nbsp&nbsp码:<input name="password" type="password" placeholder=">请输入用户密码" style="width: 200px;height:25px;border-radius: 10px;color: black"  maxlength="20" minlength="1"> <br>
+        <form name="form1" action="/login_studentLogin.action" method="post">
+            学&nbsp&nbsp号:<input name="username" type="text" value="2240170201" placeholder="2240170201" style="width: 200px;height:25px;border-radius: 10px;color: black;"  maxlength="20" minlength="1"/><br>
+            密&nbsp&nbsp码:<input name="password" type="password" value="2240170201" placeholder="2240170201" style="width: 200px;height:25px;border-radius: 10px;color: black"  maxlength="20" minlength="1"> <br>
+
+            <div>
+                <font color="red"><s:property value="exception.message"/></font>
+            </div>
 
             <input type="submit" value="登录">
             <input type="button" value="注册" onclick=javascript:jump()>

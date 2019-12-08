@@ -10,24 +10,87 @@
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
                             >
 
-    <!--指定扫描po.entity包下所有类中的注解  会扫描包下的所有子孙包-->
+    <!--指定扫描po.entity包下所有类中的注解  会扫描包下的所有子孙包  我没有用注解-->
     <context:component-scan base-package="po.entity" />
 
-    <!--读取db.properties文件-->
+
+
+    <!--开启注解事务-->
     <!--
-    <context:property-placeholder location="classpath:db.properties"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
     -->
 
+    <!--把sessionFactory配置到spring容器中-->
+    <!--方案一：仍然使用外部hibernate.cfg.xml配置信息  不推荐-->
     <!--
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
     </bean>
     -->
 
-    <!--配置通知-->
+    <!--方案二：在spring配置中放置hibernate配置信息 就不需要hibernate.cfg.xml了-->
+    <!---->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" lazy-init="false">
+        <!--将连接池注入到sessionFactory中，hibernate会通过连接池获得连接-->
+        <!---->
+        <property name="dataSource" ref="dataSource" />
+        <!--配置hibernate基本信息-->
+        <!---->
+        <property name="hibernateProperties" >
+            <props>
+                <!--必选配置-->
+                <!---->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <!--可选配置-->
+                <!---->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        <!-- //加载实体类的映射文件位置及名称 -->
+        <!--引入orm元数据，指定orm元数据所在的包路径，spring会自动读取包中所有配置-->
+        <!---->
+        <property name="mappingDirectoryLocations" value="classpath:HibernateXmls"></property>
+    </bean>
+
+
+
+    <!--读取db.properties文件-->
+    <!--    -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--配置c3p0连接池-->
+    <!--    -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+        <property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+
+    <!--  事务核心管理器，封装了所有的事务操作，依赖于连接池      -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--事务模板对象-->
     <!--
+    <bean name="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+    -->
+
+
+    <!--配置通知-->
+    <!--        -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
+            <!--以方法为单位，指定方法应用什么事务属性
+                isolation:隔离级别
+                propagation：传播行为
+                only：是否只读
+            -->
             <tx:method name="save*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
             <tx:method name="persist*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
             <tx:method name="update*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
@@ -38,70 +101,15 @@
             <tx:method name="find*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>
     </tx:advice>
-    -->
-
 
     <!--配置将通知织入目标对象-->
-    <!--配置切点-->
-    <!--配置切面-->
-    <!--
+    <!--        -->
     <aop:config>
+        <!--配置切点表达式-->
         <aop:pointcut id="txPc" expression="execution (* service.Impl.*ServiceImpl.*(..))"/>
+        <!--配置切面 advice-ref:通知的名称 pointcut-ref：切点的名称-->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
     </aop:config>
-    -->
-
-
-    <!--开启注解事务-->
-    <!--
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-    -->
-
-
-
-
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" lazy-init="false">
-        <!--将连接池注入到sessionFactory中，hibernate会通过连接池获得连接-->
-        <!--
-        <property name="dataSource" ref="dataSource" />
-        -->
-
-        <property name="hibernateProperties" >
-            <props>
-                <!--必选配置-->
-                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/jspssh?characterEncoding=UTF-8</prop>
-                <prop key="hibernate.connection.username">zx</prop>
-                <prop key="hibernate.connection.password">778899</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                <!--可选配置-->
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
-        <!-- //加载实体类的映射文件位置及名称 -->
-        <!--引入orm元数据，指定orm元数据所在的包路径，spring会自动读取包中所有配置-->
-        <property name="mappingDirectoryLocations" value="classpath:/"></property>
-    </bean>
-
-    <!--配置c3p0连接池-->
-    <!--
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
-        <property name="driverClass" value="${jdbc.driverClass}"/>
-        <property name="user" value="${jdbc.user}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-    -->
-
-
-
-    <!--
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    -->
 
 <!--
 
@@ -151,22 +159,18 @@
     </bean>-->
 
 
+    <!--====================================================================================-->
 
     <!--配Dao-->
     <bean id="studentInfoDao" class="dao.Impl.StudentInfoDaoImpl" abstract="false" lazy-init="default" autowire="byName">
-        <!--
-        <property name="sessionFactory">
-            <ref bean="sessionFactory"/>
-        </property>
-        -->
+        <!--        -->
+        <property name="sessionFactory" ref="sessionFactory"/>
 
     </bean>
 
     <!--配置Service-->
     <bean id="studentService" class="service.Impl.StudentServiceImpl" abstract="false" lazy-init="default" autowire="byName">
-        <property name="studentInfoDao">
-            <ref bean="studentInfoDao"></ref>
-        </property>
+        <property name="studentInfoDao" ref="studentInfoDao"/>
     </bean>
 
 
@@ -174,7 +178,7 @@
 
     <!--配置action-->
     <!--Action对象作用范围是多例的，符合struts2框架-->
-    <bean name="loginAction"  class="com.local.loginAction" scope="prototype">
+    <bean name="loginAction" class="com.local.LoginAction" scope="prototype">
         <!--依赖注入业务逻辑Service组件-->
         <property name="studentService" ref="studentService"/>
     </bean>
