@@ -83,20 +83,20 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentloginEntity saveStuInfoTwo(StudentloginEntity studentloginEntity) {
-        StudentloginEntity stu = null;
+        StudentloginEntity stu = studentloginEntity;
         StudentloginEntity stuEntity = studentInfoDao.findStuInfoByStuUsername(studentloginEntity.getUsername());
         //1、判断用户是否存在，存在---》抛出异常，提示用户名不存在
         if(stuEntity!=null){
+            System.out.println("用户名已存在，请更换用户名");
             throw new RuntimeException("用户名已存在，请更换用户名");
         }
-
-        //2、不存在---》保存用户
         if(stuEntity==null){
+            //2、不存在---》保存用户
             stu = studentInfoDao.saveStuInfoTwo(studentloginEntity);
-            throw new RuntimeException("您已注册成功，请返回登录");
+            System.out.println("您已注册成功，请返回登录");
         }
-        return stu;
 
+        return stu;
     }
 
     @Override

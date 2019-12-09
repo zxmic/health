@@ -162,35 +162,42 @@
     <!--====================================================================================-->
 
     <!--配Dao-->
-    <bean id="studentInfoDao" class="dao.Impl.StudentInfoDaoImpl" abstract="false" lazy-init="default" autowire="byName">
-        <!--        -->
+    <bean name="studentInfoDao" class="dao.Impl.StudentInfoDaoImpl" abstract="false" lazy-init="default" autowire="byName">
         <property name="sessionFactory" ref="sessionFactory"/>
-
     </bean>
-
     <!--配置Service-->
-    <bean id="studentService" class="service.Impl.StudentServiceImpl" abstract="false" lazy-init="default" autowire="byName">
+    <bean name="studentService" class="service.Impl.StudentServiceImpl" abstract="false" lazy-init="default" autowire="byName">
         <property name="studentInfoDao" ref="studentInfoDao"/>
     </bean>
 
 
-    <!--*********************************************************************************************-->
-
-    <!--配置action-->
-    <!--Action对象作用范围是多例的，符合struts2框架-->
-    <bean name="loginAction" class="com.local.LoginAction" scope="prototype">
+    <bean name="todayMoodDao" class="dao.Impl.TodayMoodDaoImpl" abstract="false" autowire="byName">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="todayMoodService" class="service.Impl.TodayMoodServiceImpl" abstract="false" autowire="byName">
+        <property name="todayMoodDao" ref="todayMoodDao"/>
+    </bean>
+    <bean name="loginAction" class="com.base.action.LoginAction" scope="prototype">
         <!--依赖注入业务逻辑Service组件-->
         <property name="studentService" ref="studentService"/>
+        <property name="todayMoodService" ref="todayMoodService"/>
     </bean>
+    <!--配置action-->
+    <!--Action对象作用范围是多例的，符合struts2框架-->
+    <bean name="todayMoodAction" class="com.base.action.TodayMoodAction" scope="prototype">
+        <!--依赖注入业务逻辑Service组件-->
+        <property name="todayMoodService" ref="todayMoodService"/>
+    </bean>
+
+    <!--*********************************************************************************************-->
+
+
 
     <!--
     <tx:annotation-driven transaction-manager="transactionManager"/>
     -->
 
-    <bean name="stu" class="po.entity.StudentloginEntity" >
-        <property name="username" value="123"/>
-        <property name="password" value="456"/>
-    </bean>
+
 
 
 </beans>

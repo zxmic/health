@@ -30,11 +30,16 @@
         </action>
 
         <action name="regist_studentRegist" class="loginAction" method="studentRegist">
-            <result name="success">su.jsp</result>
-            <result name="error">su1.jsp</result>
-
+            <result name="success">/com/local/student/login.jsp</result>
+            <result name="error">/com/local/student/regist.jsp</result>
+            <result name="aaa">aaa.jsp</result>
         </action>
 
+        <action name="uptate_todaymood" class="todayMoodAction" method="savetodayMood">
+            <result name="success">/com/local/student/top_nopicture.jsp</result>
+
+        </action>
+        
     </package>
     <package name="teacher" extends="struts-default">
 

@@ -1,17 +1,12 @@
-package com.local;
+package com.base.action;
 
-import com.BaseAction;
+import com.base.LoginBaseAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
-import org.apache.struts2.ServletActionContext;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import po.entity.MypointEntity;
 import po.entity.StudentloginEntity;
-import service.StudentService;
 
-import javax.servlet.ServletContext;
-
-public class LoginAction extends BaseAction implements ModelDriven<StudentloginEntity> {
+public class LoginAction extends LoginBaseAction implements ModelDriven<StudentloginEntity> {
 
     private StudentloginEntity stuE=new StudentloginEntity();
 
@@ -21,14 +16,19 @@ public class LoginAction extends BaseAction implements ModelDriven<StudentloginE
         StudentloginEntity studentloginEntity=studentService.checkStu(stuE.getUsername(),stuE.getPassword());
         //2、将返回的StudentloginEntity对象放入session域
         ActionContext.getContext().getSession().put("studentloginEntity",studentloginEntity);
+
         //3、重定向到项目首页  表明在数据库中查询到学生信息
         if(studentloginEntity!=null){
-            System.out.println("查询报空3正确");
+            System.out.println("登录正确");
+            //获得一系列的session
+            MypointEntity mypointEntity= todayMoodService.findMoodByStuid(studentloginEntity.getStudentid());
+            ActionContext.getContext().getSession().put("mypointEntity",mypointEntity);
+
             return "success";
 
 
         }else {
-            System.out.println("查询报空3错误");
+            System.out.println("登录错误");
             //数据库查询为空的结果
             return "error";
         }
@@ -46,6 +46,16 @@ public class LoginAction extends BaseAction implements ModelDriven<StudentloginE
 
 
     public String studentRegist() throws Exception{
+        //补齐空缺字段
+        stuE.setRealname("0");
+        stuE.setClazz("0");
+        stuE.setStudentid("0");
+        stuE.setTel("0");
+        stuE.setClassmaster("0");
+        stuE.setMastertel("0");
+        stuE.setCollege("0");
+        stuE.setMajor("0");
+        stuE.setDorm("0");
         StudentloginEntity studentloginEntity=studentService.saveStuInfoTwo(stuE);
         if (studentloginEntity==null){
             return "error";

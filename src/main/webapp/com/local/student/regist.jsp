@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: zx
@@ -15,6 +16,10 @@
             height: auto;
             margin: auto;
             padding-top: 10%;
+        }
+        .c2{
+            width: 760px;
+            height: 100px;
         }
 
 
@@ -44,7 +49,7 @@
                 学&nbsp&nbsp号:<input name="username" type="text" value="2240170201" placeholder="2240170201" style="width: 200px;height:25px;border-radius: 10px;color: black;"  maxlength="20" minlength="1"/><br>
                 密&nbsp&nbsp码:<input name="password" type="password" value="2240170201" placeholder="2240170201" style="width: 200px;height:25px;border-radius: 10px;color: black"  maxlength="20" minlength="1"/> <br>
 
-                <div>
+                <div class="c2">
                     <font color="red"><s:property value="exception.message"/></font>
                 </div>
 

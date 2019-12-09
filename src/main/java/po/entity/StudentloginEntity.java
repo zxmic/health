@@ -25,8 +25,18 @@ public class StudentloginEntity implements Serializable {
     @Override
     public String toString() {
         return "StudentloginEntity{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", realname='" + realname + '\'' +
+                ", clazz='" + clazz + '\'' +
+                ", studentid='" + studentid + '\'' +
+                ", tel='" + tel + '\'' +
+                ", classmaster='" + classmaster + '\'' +
+                ", mastertel='" + mastertel + '\'' +
+                ", college='" + college + '\'' +
+                ", major='" + major + '\'' +
+                ", dorm='" + dorm + '\'' +
                 '}';
     }
 

@@ -20,26 +20,16 @@
         ${sessionScope.studentloginEntity.getClazz()}
     </div>
 
-    <el-rate
-            v-model="value"
-            :icon-classes="iconClasses"
-            void-icon-class="icon-rate-face-off"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-    </el-rate>
 
-    <script>
-        export default {
-            data() {
-                return {
-                    value: null,
-                    iconClasses: ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3'] // 等同于 { 2: 'icon-rate-face-1', 4: { value: 'icon-rate-face-2', excluded: true }, 5: 'icon-rate-face-3' }
-                }
-            }
-        }
-    </script>
-
-    <form name="form" action="uptate_">
-    今日心情指数：<input type="text" name="stars"><br>
+    <form name="form" action="uptate_todaymood.action">
+    今日心情指数：${sessionScope.mypointEntity.getMoodpoint()}
+        <select name="moodpoint">
+            <option >极差</option>
+            <option>郁闷</option>
+            <option>一般</option>
+            <option selected="selected">嗨皮</option>
+            <option>人生巅峰</option>
+        </select>
     <input type="submit" name="submit"  value="确认提交">
 
 </form>

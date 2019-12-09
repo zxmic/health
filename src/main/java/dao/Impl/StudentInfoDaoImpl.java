@@ -125,23 +125,15 @@ public class StudentInfoDaoImpl extends HibernateDaoSupport implements StudentIn
     @Override
     public StudentloginEntity saveStuInfoTwo(StudentloginEntity studentloginEntity) {
         try {
-            studentloginEntity.setRealname("0");
-            studentloginEntity.setClazz("0");
-            studentloginEntity.setStudentid("0");
-            studentloginEntity.setTel("0");
-            studentloginEntity.setClassmaster("0");
-            studentloginEntity.setMastertel("0");
-            studentloginEntity.setCollege("0");
-            studentloginEntity.setMajor("0");
-            studentloginEntity.setDorm("0");
             this.getHibernateTemplate().save(studentloginEntity);
             System.out.println("保存用户数据到数据库成功");
+            System.out.println(studentloginEntity);
             return studentloginEntity;
         }catch (Exception e){
             System.out.println("保存用户数据到数据库失败");
             e.printStackTrace();
         }
-        return null;
+        return studentloginEntity;
     }
 
 
