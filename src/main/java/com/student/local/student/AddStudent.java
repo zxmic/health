@@ -1,37 +1,29 @@
-package com.local.student;
+package com.student.local.student;
+
 
 import com.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 
-public class operateStudent {
-    static {
-        try {
-            //1.加载HIbernate核心配置文件0
-            Configuration cfg= new Configuration().configure();
-            cfg.configure();
-            //2.使用sessionFactory
-            SessionFactory sessionFactory=cfg.buildSessionFactory();
-            //3使用sessionfactory 实例化session对象
-            Session session = sessionFactory.openSession();			//声明Session对象
-            //开始事物
-            Transaction transaction=session.beginTransaction();
-        } catch (Exception e) {
-            System.err.println("创建会话工厂失败");
-            e.printStackTrace();
-        }
+
+public class AddStudent {
+    public static void main(String[] args) {
+        add();
     }
+    public static void  add(){
+        //1.加载HIbernate核心配置文件0
+        Configuration cfg= new Configuration().configure();
+        cfg.configure();
+        //2.使用sessionFactory
+        SessionFactory sessionFactory=cfg.buildSessionFactory();
+        //3使用sessionfactory 实例化session对象
+        Session session = sessionFactory.openSession();			//声明Session对象
+        //开始事物
+        Transaction transaction=session.beginTransaction();
 
-
-    public void operate(){
-
-
-    }
-
-    private void add(Session session,Transaction transaction,SessionFactory sessionFactory){
         StudentloginEntity studentloginEntity = new StudentloginEntity();//实例化持久化类
         //为持久化类属性赋值
         studentloginEntity.setUsername("02240170203");
@@ -66,12 +58,5 @@ public class operateStudent {
             HibernateSessionFactory.closeSession();//关闭Session对象
         }
         System.out.println("结束");
-
     }
-
-    private void delete(){
-
-
-    }
-
 }

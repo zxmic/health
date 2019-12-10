@@ -1,4 +1,4 @@
-package com.base;
+package com.student.base;
 
 import service.TodayMoodService;
 

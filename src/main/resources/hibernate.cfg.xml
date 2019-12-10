@@ -17,12 +17,16 @@
       <!-- 配置映射文件 -->
 
       <mapping resource="HibernateXmls/StudentloginEntity.hbm.xml" />
-      <mapping class="po.entity.MypointEntity"/>
+      <mapping class="po.entity.student.MypointEntity"/>
       <mapping resource="HibernateXmls/MypointEntity.hbm.xml"/>
       <mapping resource="HibernateXmls/MypointEntity.hbm.xml"/>
       <mapping resource="HibernateXmls/MypointEntity.hbm.xml"/>
+      <mapping resource="HibernateXmls/MywordEntity.hbm.xml"/>
+      <mapping class="po.entity.student.MywordEntity"/>
+      <mapping resource="HibernateXmls/TeacherloginEntity.hbm.xml"/>
+      <mapping class="po.entity.teacher.TeacherloginEntity"/>
 
-      <!--<mapping class="po.entity.StudentloginEntity"/>-->
+      <!--<mapping class="po.entity.student.StudentloginEntity"/>-->
 
   </session-factory>
 </hibernate-configuration>

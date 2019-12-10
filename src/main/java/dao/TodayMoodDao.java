@@ -1,11 +1,13 @@
 package dao;
 
 
-import po.entity.MypointEntity;
+import po.entity.student.MypointEntity;
+
+import java.util.List;
 
 public interface TodayMoodDao {
     //根据学号查询心情
-    public MypointEntity findMoodByStuid(String studentid);
+    public List<MypointEntity> findMoodByStuid(String studentid);
 
     //根据学号和日期查询心情
     public MypointEntity findMoodByStuidAndData(String studentid,String data);

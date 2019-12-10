@@ -1,4 +1,4 @@
-package po.entity;
+package po.entity.student;
 
 import org.springframework.stereotype.Component;
 

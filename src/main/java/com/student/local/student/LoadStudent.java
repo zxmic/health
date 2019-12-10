@@ -1,13 +1,13 @@
-package com.local.student;
+package com.student.local.student;
 
 import com.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 
-public class DeleteStudent {
+public class LoadStudent {
     public static void main(String[] args) {
         //1.加载HIbernate核心配置文件0
         Configuration cfg= new Configuration().configure();
@@ -21,21 +21,23 @@ public class DeleteStudent {
 
         try {
             //Hibernate的持久化操作
-            StudentloginEntity studentloginEntity = (StudentloginEntity) session.get(StudentloginEntity.class, new Integer("6"));//装载对象
-            System.out.println(studentloginEntity.getRealname());
-            session.delete(studentloginEntity);//删除持久化信息
-            session.flush();//强制刷新提交
-            session.getTransaction().commit();
+            //Product product = new Product();//实例化对象
+            //session.load(product, new Integer("4"));//装载对象
+            StudentloginEntity studentloginEntity = (StudentloginEntity) session.load(StudentloginEntity.class, new Integer("5"));//装载对象
+            System.out.println("学生ID："+studentloginEntity.getId());
+            System.out.println("学生真名："+studentloginEntity.getRealname());
+            System.out.println("学生宿舍："+studentloginEntity.getDorm());
+
         } catch (Exception e) {
             session.getTransaction().rollback();//事务回滚
-            System.out.println("数据删除失败");
+            System.out.println("数据查询失败");
             e.printStackTrace();
         } finally{
             session.close();
             sessionFactory.close();
             HibernateSessionFactory.closeSession();//关闭Session对象
         }
-        System.out.println("delete结束");
+        System.out.println("load结束");
     }
 
 }

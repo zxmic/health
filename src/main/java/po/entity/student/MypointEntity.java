@@ -1,4 +1,4 @@
-package po.entity;
+package po.entity.student;
 
 import javax.persistence.*;
 import java.util.Objects;

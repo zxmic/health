@@ -14,7 +14,7 @@
 <form >
     <div>
         我的小心事：<br>
-        <input type="text" name="problemText"><br>
+        <textarea name="todaymyword" cols="25" rows="15">${sessionScope.mywordEntity.getTodaymyword()}</textarea>
         指定老师：<br>
         <input type="text" name="teacher_name"><br>
         <input type="submit" name="submit" value="确认发送">

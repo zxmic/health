@@ -6,21 +6,38 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import po.entity.MypointEntity;
+import po.entity.student.MypointEntity;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TodayMoodDaoImpl extends HibernateDaoSupport implements TodayMoodDao {
     @Override
-    public MypointEntity findMoodByStuid(final String studentid) {
-        return getHibernateTemplate().execute(new HibernateCallback<MypointEntity>() {
-            @Override
-            public MypointEntity doInHibernate(Session session) throws HibernateException {
-                String hql = "from MypointEntity c where c.studentid=?";
-                Query query=session.createQuery(hql);
-                query.setParameter(0,studentid);
-                MypointEntity mpointEntity=(MypointEntity)query.uniqueResult();
-                return mpointEntity;
-            }
-        });
+    public List<MypointEntity> findMoodByStuid(final String studentid) {
+
+        List<MypointEntity> list=new ArrayList();
+        String hql="from MypointEntity s order by s.studentid";
+        List l=this.getHibernateTemplate().find(hql);
+        Iterator iterator =l.iterator();
+        while (iterator.hasNext()){
+            MypointEntity mypointEntities=(MypointEntity) iterator.next();
+            list.add(mypointEntities);
+        }
+        return list;
+
+
+//        return getHibernateTemplate().execute(new HibernateCallback<List<MypointEntity>>() {
+//            @Override
+//            public List<MypointEntity> doInHibernate(Session session) throws HibernateException {
+//                List<MypointEntity> list=new ArrayList<MypointEntity>();
+//                String hql = "from MypointEntity c where c.studentid=?";
+//                List<MypointEntity> l=session.find(hql);//.createQuery(hql);
+//                query.setParameter(0,studentid);
+//                List<MypointEntity> mpointEntities=(List<MypointEntity>)query.uniqueResult();
+//                return mpointEntities;
+//            }
+//        });
     }
 
     //根据学号和日期查询心情

@@ -1,12 +1,11 @@
-package com.local.student;
+package com.student.local.student;
 
 import com.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 
 import java.util.List;
 

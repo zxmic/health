@@ -1,8 +1,7 @@
 package service.Impl;
 
-import dao.Impl.StudentInfoDaoImpl;
 import dao.StudentInfoDao;
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 import service.StudentService;
 
 import java.util.List;

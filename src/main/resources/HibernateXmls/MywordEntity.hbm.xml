@@ -4,18 +4,15 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="po.entity.student.MypointEntity" table="mypoint" schema="jspssh">
+    <class name="po.entity.student.MywordEntity" table="myword" schema="jspssh">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>
         <property name="studentid">
             <column name="studentid" sql-type="varchar(20)" length="20" not-null="true"/>
         </property>
-        <property name="moodpoint">
-            <column name="moodpoint" sql-type="varchar(20)" length="20" not-null="true"/>
-        </property>
-        <property name="whichday">
-            <column name="whichday" sql-type="varchar(20)" length="20" not-null="true"/>
+        <property name="todaymyword">
+            <column name="todaymyword" sql-type="varchar(200)" length="200" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

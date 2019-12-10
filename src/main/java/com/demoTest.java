@@ -4,12 +4,8 @@ import dao.StudentInfoDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.junit.runner.RunWith;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.junit.Test;
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 
 import javax.annotation.Resource;
 public class demoTest {

@@ -12,11 +12,51 @@
 </head>
 <body>
 <div>
-    姓名：xxx &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 班级：xxx <br>
-    学号：xxx &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 联系方式：xxx <br>
-    班主任：xxx &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 班主任联系方式：xxx <br>
-    学院：xxx &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 专业：xxx <br>
-    宿舍：xxx
+    <table>
+        <tr>
+            <td>
+                姓名：${sessionScope.studentloginEntity.getRealname()}
+            </td>
+            <td>
+                班级：${sessionScope.studentloginEntity.getClazz()}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                学号：${sessionScope.studentloginEntity.getStudentid()}
+            </td>
+            <td>
+                联系方式：${sessionScope.studentloginEntity.getTel()}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                班主任：${sessionScope.studentloginEntity.getClassmaster()}
+            </td>
+            <td>
+                班主任联系方式：${sessionScope.studentloginEntity.getMastertel()}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                学院：${sessionScope.studentloginEntity.getCollege()}
+            </td>
+            <td>
+                专业：${sessionScope.studentloginEntity.getMajor()}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                宿舍：${sessionScope.studentloginEntity.getDorm()}
+            </td>
+            <td>
+
+            </td>
+        </tr>
+
+
+    </table>
+
 </div>
 <div>
     <form>

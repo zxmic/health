@@ -1,10 +1,10 @@
-package com.base.action;
+package com.student.base.action;
 
-import com.base.todayMoodBaseAction;
+import com.student.base.todayMoodBaseAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
-import po.entity.MypointEntity;
-import po.entity.StudentloginEntity;
+import po.entity.student.MypointEntity;
+import po.entity.student.StudentloginEntity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,13 +31,9 @@ public class TodayMoodAction extends todayMoodBaseAction implements ModelDriven<
         mypointE.setStudentid(sE.getStudentid());
         System.out.println("真实保存的"+mypointE);
         //把mypointE保存到数据库中
-        todayMoodService.saveTodayMood(mypointE);
+        MypointEntity mp=todayMoodService.saveTodayMood(mypointE);
         //把心情保存到session中
-        ActionContext.getContext().getSession().put("mypointEntity",mypointE);
-
-
-
-
+        ActionContext.getContext().getSession().put("mypointEntity",mp);
         return "success";
     }
 

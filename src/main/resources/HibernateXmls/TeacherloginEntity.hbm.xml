@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="po.entity.teacher.TeacherloginEntity" table="teacherlogin" schema="jspssh">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="username">
+            <column name="username" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="realname">
+            <column name="realname" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="niname">
+            <column name="niname" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="college">
+            <column name="college" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="tel">
+            <column name="tel" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <property name="teacherage">
+            <column name="teacherage" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

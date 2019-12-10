@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="po.entity.StudentloginEntity" table="studentlogin" schema="jspssh">
+    <class name="po.entity.student.StudentloginEntity" table="studentlogin" schema="jspssh">
         <id name="id" type="java.lang.Integer">
             <column name="id" sql-type="int(11)"/>
             <generator class="native"/>

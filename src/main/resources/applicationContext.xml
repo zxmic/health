@@ -161,6 +161,7 @@
 
     <!--====================================================================================-->
 
+    <!--登录一套-->
     <!--配Dao-->
     <bean name="studentInfoDao" class="dao.Impl.StudentInfoDaoImpl" abstract="false" lazy-init="default" autowire="byName">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -169,24 +170,36 @@
     <bean name="studentService" class="service.Impl.StudentServiceImpl" abstract="false" lazy-init="default" autowire="byName">
         <property name="studentInfoDao" ref="studentInfoDao"/>
     </bean>
+    <!--配置action-->
+    <!--Action对象作用范围是多例的，符合struts2框架-->
+    <bean name="loginAction" class="com.student.base.action.LoginAction" scope="prototype">
+        <!--依赖注入业务逻辑Service组件-->
+        <property name="studentService" ref="studentService"/>
+        <property name="todayMoodService" ref="todayMoodService"/>
+        <property name="todayFeelingService" ref="todayFeelingService"/>
+    </bean>
 
 
+    <!--我的心情指数一套-->
     <bean name="todayMoodDao" class="dao.Impl.TodayMoodDaoImpl" abstract="false" autowire="byName">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean name="todayMoodService" class="service.Impl.TodayMoodServiceImpl" abstract="false" autowire="byName">
         <property name="todayMoodDao" ref="todayMoodDao"/>
     </bean>
-    <bean name="loginAction" class="com.base.action.LoginAction" scope="prototype">
-        <!--依赖注入业务逻辑Service组件-->
-        <property name="studentService" ref="studentService"/>
+    <bean name="todayMoodAction" class="com.student.base.action.TodayMoodAction" scope="prototype">
         <property name="todayMoodService" ref="todayMoodService"/>
     </bean>
-    <!--配置action-->
-    <!--Action对象作用范围是多例的，符合struts2框架-->
-    <bean name="todayMoodAction" class="com.base.action.TodayMoodAction" scope="prototype">
-        <!--依赖注入业务逻辑Service组件-->
-        <property name="todayMoodService" ref="todayMoodService"/>
+
+    <!--我的小心事一套-->
+    <bean name="todayFeelingDao" class="dao.Impl.TodayFeelingDaoImpl" abstract="false" autowire="byName">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="todayFeelingService" class="service.Impl.TodayFeelingServiceImpl" abstract="false" autowire="byName">
+        <property name="todayFeelingDao" ref="todayFeelingDao"/>
+    </bean>
+    <bean name="todayFeelingAction" class="com.student.base.action.WordAction" scope="prototype">
+        <property name="todayFeelingService" ref="todayFeelingService"/>
     </bean>
 
     <!--*********************************************************************************************-->

@@ -1,6 +1,6 @@
 package dao;
 
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 
 import java.util.List;
 

@@ -1,10 +1,15 @@
-package com.base.action;
+package com.student.base.action;
 
-import com.base.LoginBaseAction;
+import com.student.base.LoginBaseAction;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
-import po.entity.MypointEntity;
-import po.entity.StudentloginEntity;
+import po.entity.student.MypointEntity;
+import po.entity.student.MywordEntity;
+import po.entity.student.StudentloginEntity;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class LoginAction extends LoginBaseAction implements ModelDriven<StudentloginEntity> {
 
@@ -21,8 +26,19 @@ public class LoginAction extends LoginBaseAction implements ModelDriven<Studentl
         if(studentloginEntity!=null){
             System.out.println("登录正确");
             //获得一系列的session
-            MypointEntity mypointEntity= todayMoodService.findMoodByStuid(studentloginEntity.getStudentid());
+            //mypointEntity保存 学生某一天的心情点数
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String sdate=date.format(formatter);
+            MypointEntity mypointEntity= todayMoodService.findMoodByStuidAndData(studentloginEntity.getStudentid(),sdate);
             ActionContext.getContext().getSession().put("mypointEntity",mypointEntity);
+            //mypointEntities保存学生心情点数链表
+            List<MypointEntity> mypointEntities= todayMoodService.findMoodByStuid(studentloginEntity.getStudentid());
+            ActionContext.getContext().getSession().put("mypointEntities",mypointEntities);
+            //mywordEntity保存我的留言
+            MywordEntity mywordEntity=todayFeelingService.fingFeelingByStudentid(studentloginEntity.getStudentid());
+            ActionContext.getContext().getSession().put("mywordEntity",mywordEntity);
+            System.out.println("login  mywordEntity"+mywordEntity);
 
             return "success";
 
@@ -35,15 +51,6 @@ public class LoginAction extends LoginBaseAction implements ModelDriven<Studentl
 
 
     }
-    public String teacherLogin() throws Exception{
-//        if("xxx".equals(username)&&"xxx".equals(password)){
-//            System.out.println("xxxok");
-//            return "tok";
-//        }
-        System.out.println("xxxno");
-        return "tno";
-    }
-
 
     public String studentRegist() throws Exception{
         //补齐空缺字段
@@ -63,6 +70,18 @@ public class LoginAction extends LoginBaseAction implements ModelDriven<Studentl
             return "success";
         }
 
+    }
+
+    public String teacherLogin() throws Exception{
+
+        System.out.println("xxxno");
+        return "tno";
+    }
+
+    public String teacherRegist() throws Exception{
+
+        System.out.println("xxxno");
+        return "tno";
     }
 
 

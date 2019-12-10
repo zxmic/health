@@ -1,16 +1,12 @@
 package dao.Impl;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import dao.StudentInfoDao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-import po.entity.StudentloginEntity;
+import po.entity.student.StudentloginEntity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -96,12 +92,12 @@ public class StudentInfoDaoImpl extends HibernateDaoSupport implements StudentIn
 
     @Override
     public List findStuInfoAll() {
-        List list=new ArrayList();
-        String hql="from StudentloginEntity s order by s.id";
-        List l=this.getHibernateTemplate().find(hql);
-        Iterator iterator =l.iterator();
-        while (iterator.hasNext()){
-            StudentloginEntity studentloginEntity=(StudentloginEntity) iterator.next();
+        List list = new ArrayList();
+        String hql = "from StudentloginEntity s order by s.id";
+        List l = this.getHibernateTemplate().find(hql);
+        Iterator iterator = l.iterator();
+        while (iterator.hasNext()) {
+            StudentloginEntity studentloginEntity = (StudentloginEntity) iterator.next();
             list.add(studentloginEntity);
         }
         return list;
@@ -115,11 +111,13 @@ public class StudentInfoDaoImpl extends HibernateDaoSupport implements StudentIn
         return totalRows;
     }
 
+
+
     @Override
     public boolean updateStuInfo(StudentloginEntity studentloginEntity) {
-        this.getHibernateTemplate().saveOrUpdate(studentloginEntity);
-        System.out.println("修改用户信息成功");
-        return true;
+         this.getHibernateTemplate().saveOrUpdate(studentloginEntity);
+         System.out.println("修改用户信息成功");
+         return true;
     }
 
     @Override

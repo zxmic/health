@@ -39,6 +39,11 @@
             <result name="success">/com/local/student/top_nopicture.jsp</result>
 
         </action>
+
+        <action name="save_todaymyword" class="todayFeelingAction" method="saveTodayWord">
+            <result name="success">/com/local/student/todayFeeling.jsp</result>
+        </action>
+
         
     </package>
     <package name="teacher" extends="struts-default">

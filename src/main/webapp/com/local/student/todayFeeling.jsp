@@ -11,13 +11,13 @@
     <title>todayFeeling</title>
 </head>
 <body>
-<form>
+<form action="save_todaymyword.action" method="post">
     <div>
-        今日心情指数：<input type="text" name="todayFeelingPoint" value="5">
+        今日心情指数：${sessionScope.mypointEntity.getMoodpoint()}
     </div>
     <div>
         我的小心事：<br>
-        <input type="text" name="todayMyWord" value="xxxxxxxxxxx">
+        <textarea name="todaymyword" cols="25" rows="15">${sessionScope.mywordEntity.getTodaymyword()}</textarea>
     </div>
     <div>
         <input type="submit" name="submit" value="保存">
